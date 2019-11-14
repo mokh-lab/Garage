@@ -8,17 +8,19 @@ namespace Garage
         static void Main(string[] args)
         {
 
-            // Vehicle vehicle = new Vehicle();
+            
+            Console.WriteLine("Welcome To Garage");
+            //Break out to different place
+            Console.WriteLine("Plase Enter The capacity of the garage");
+            int capacity = int.Parse(Console.ReadLine());
+           GarageHandler GH = new GarageHandler(capacity);
 
-            //public GarageList<Vehicle> GarageLst { get; set; }
+        
 
-            // Console.WriteLine("Welcome To Garage");
+            UI ui = new UI(GH);
 
             //------Call User Interface
-
-            GarageHandler g = new GarageHandler();
-
-            g.UI();
+            ui.UserInterface();
 
            
 
