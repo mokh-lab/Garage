@@ -41,25 +41,30 @@ namespace Garage
                 switch (input)
                 {
                     case '1':
-                        //Call Add Method
-
-                       
-
-
+                        //Call Add Method     
+                        
                         GH.Park();
+
 
                         //Park(v.RegNo, v.Type);
                         break;
                         
                     case '2':
                         // Call Remove Method
+                        Console.WriteLine("Please Enter A regNr for delet a Vehicle");
                         string regno = Console.ReadLine();
-                        //GH.UnPark(regno);
+                        GH.UnPark(regno);
+                        
                         break;
 
                     case '3':
                         //Call Stats Method
+                        GH.ListOfAllVehicle();
+                        break;
 
+                    case '4':
+                        string regno1 = Console.ReadLine();
+                        GH.FindAVehicle(regno1);
                         break;
 
                     case 'q':

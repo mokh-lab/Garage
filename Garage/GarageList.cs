@@ -9,8 +9,9 @@ namespace Garage
     {
         public T[] array;
         int capacity;
+        int count;
         public int Capacity => capacity;
-        public int Count => array.Length;
+        public int Count => count ;
         public bool IsFull => capacity <= Count;
 
         //  private Vehicle[] VArr = new Vehicle[13];
@@ -18,43 +19,45 @@ namespace Garage
         public GarageList(int capacity)
         {
             this.capacity = Math.Max(0, capacity);
-            array = new T[capacity];
-        }
-      
-      
-
-
-       //++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-       public IEnumerator<T> GetEnumerator()
-        {
-            throw new System.NotImplementedException();
+            array = new T[capacity];           
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public bool checkIsGarageFull()
         {
-            throw new System.NotImplementedException();
+            bool IsFull = false;
+
+            if (count == Capacity)
+                IsFull = true;
+
+            return IsFull;
         }
-        
-       /* internal void Park( Car car)
+
+
+
+        internal Array RemovAtt(int removeNr)
         {
+            var V = new List<Vehicle>(array);
+            V.RemoveAt(removeNr);
+            return V.ToArray();
+        }
 
 
-            for (int i = 0; i < Capacity; i++)
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            foreach (T vehicle in array)
             {
-                string a = car.RegNo;
-                string b = car.Type;
-                string c = car.FuleType;
-                Console.WriteLine("Enter Regno");
-                 a = Console.ReadLine();
-                Console.WriteLine("Enter Vehicle Type");
-                 b = Console.ReadLine();
-                Console.WriteLine("Enter Fule Type");
-                 c = Console.ReadLine();
-
-
-                array[i] = car as T;
+                yield return vehicle;
             }
-        }*/
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+       
+
+        //************************************************************                      
+
     }
 }
