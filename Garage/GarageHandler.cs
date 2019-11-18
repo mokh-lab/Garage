@@ -134,18 +134,26 @@ namespace Garage
         {
             string feedback = "";
 
-           
+            if (garage.Count > 0)
+            {
                 IEnumerable<Vehicle> query = from s in garage.array
                                              where s.RegNo.ToUpper() == regno.ToUpper()
                                              select s;
                 foreach (Vehicle s in query)
-                    feedback = "The Regnr Is: "+ s.RegNo +"  The Type Is: "+ s.Type;
-            
-           
+                    feedback = "The Regnr Is: " + s.RegNo + "  The Type Is: " + s.Type;
 
-                if (feedback == "")
+
+
+            }
+
+
+
+            if (feedback == "")
                 feedback = "Sorry No such match for regnr!!: " + regno + " in the garage";
             return feedback;
+
+
+
         }
 
         internal void ListOfAllVehicle()
