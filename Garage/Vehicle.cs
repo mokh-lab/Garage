@@ -9,6 +9,8 @@ namespace Garage
     {
         public string RegNo { get ; set ; }
         public string Type { get; set; }
+
+       
     }
 
     class Car : Vehicle

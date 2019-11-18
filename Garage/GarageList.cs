@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace Garage
 {
@@ -11,10 +11,12 @@ namespace Garage
         int capacity;
         int count;
         public int Capacity => capacity;
-        public int Count => count ;
+        public int Count => array.Count(count => count != null);
         public bool IsFull => capacity <= Count;
 
         //  private Vehicle[] VArr = new Vehicle[13];
+
+            
 
         public GarageList(int capacity)
         {
@@ -32,6 +34,21 @@ namespace Garage
             return IsFull;
         }
 
+   
+           
+        
+
+        public virtual bool Add(T Vehicle)
+        {
+            
+
+            if (IsFull) return false;
+           
+            var a = array.ToList();
+                a.Add(Vehicle);
+            return true;
+            
+        }
 
 
         internal Array RemovAtt(int removeNr)

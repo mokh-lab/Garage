@@ -22,23 +22,11 @@ namespace Garage
 
         public void Park()
         {
-            // Console.WriteLine(  garage.array.Length);
-            /*
-            List<string> feedback = new List<string>();
-
-            IEnumerable<Vehicle> query = from s in garage.array
-                  where s  != null
-                  select s;
-
-            foreach (var item in garage.array)
-            {
-                feedback.Add(item.ToString());
-                Console.WriteLine(feedback.Count);
-            }*/
-
+          
+                bool a=true;
+                int i = 0;
            
-            bool a=true;
-            while ( a == true)
+            while ( garage.Count < garage.Capacity)
             {
                 char input = ' ';
                 Console.WriteLine("Plase Choose The type of the Vehicle");
@@ -46,7 +34,7 @@ namespace Garage
                 Console.WriteLine("Plase Choose 2 for Bus");
                 Console.WriteLine("Plase Choose 3 for Boat");
                 Console.WriteLine("Plase Choose 4 for ParkMotoCyckle");
-                Console.WriteLine("Plase Choose 5 to go back");
+                Console.WriteLine("-----------------------------");               
                 try
                 {
                     input = Console.ReadLine()[0];
@@ -57,38 +45,86 @@ namespace Garage
                     Console.Clear();
                     Console.WriteLine("Please Enter A Valid Value");
                 }
-            
-              
+
+
                 //No loop
-                for (int i = 0; i < garage.Capacity; i++)
+                if (i < garage.Capacity)
                 {
-                  
-                        int c = i;
-                        switch (input)
-                        {
-                            case '1':
+                    bool garageFull;
+
+
+                    int c = i;
+                    switch (input)
+                    {
+                        case '1':
+                            garageFull = garage.checkIsGarageFull();
+
+                            if (garageFull == true)
+                                Console.WriteLine("Sorry the garage is  full ");
+                            else
+                            {
+
 
                                 ParkCar(c);
-                            
-                                break;
+                                Console.WriteLine("the Vehicle has been parked");
+                            }
 
-                            case '2':
+                            break;
+
+                        case '2':
+                            garageFull = garage.checkIsGarageFull();
+                            if (garageFull == true)
+                                Console.WriteLine("Sorry the garage is  full ");
+                            else
+                            {
+
                                 ParkBus(c);
-                                break;
+                                Console.WriteLine("the Vehicle has been parked");
+                            }
 
-                            case '3':
+                            break;
+
+                        case '3':
+                            garageFull = garage.checkIsGarageFull();
+                            if (garageFull == true)
+                                Console.WriteLine("Sorry the garage is  full ");
+                            else
+                            {
+
                                 ParkBoat(c);
-                                break;
+                                Console.WriteLine("the Vehicle has been parked");
+                            }
 
-                            case '4':
+                            break;
+
+                        case '4':
+
+                            garageFull = garage.checkIsGarageFull();
+                            if (garageFull == true)
+                                Console.WriteLine("Sorry the garage is  full ");
+                            else
+                            {
+
                                 ParkMotoCyckle(c);
-                                break;
+                                Console.WriteLine("the Vehicle has been parked");
+                            }
+
+
+                            break;
+
                         case '5':
                             a = false;
                             break;
-                            
-                        }
+
+
+                    }
+                    i = i + 1;
                     
+                }
+                else 
+                {
+                    Console.WriteLine("The Garge is full");
+
                 }
 
             }
@@ -98,14 +134,17 @@ namespace Garage
         {
             string feedback = "";
 
-            IEnumerable<Vehicle> query = from s in garage.array
-                                         where s.RegNo.ToUpper() == regno.ToUpper()
-                                         select s;
-            foreach (Vehicle s in query)
-                feedback = s.ToString();
+           
+                IEnumerable<Vehicle> query = from s in garage.array
+                                             where s.RegNo.ToUpper() == regno.ToUpper()
+                                             select s;
+                foreach (Vehicle s in query)
+                    feedback = "The Regnr Is: "+ s.RegNo +"  The Type Is: "+ s.Type;
+            
+           
 
-            if (feedback == "")
-                feedback = "tyvärr så finns inte regnr: " + regno + " i garaget";
+                if (feedback == "")
+                feedback = "Sorry No such match for regnr!!: " + regno + " in the garage";
             return feedback;
         }
 
@@ -113,11 +152,24 @@ namespace Garage
         {
 
 
-            for (int i = 0; i < garage.Capacity; i++)
+            /*  for (int i = 0; i < garage.Capacity; i++)
+              {
+
+                  garage.array[0].printInfo();
+
+
+              }*/
+
+            foreach (var item in garage.array)
             {
-                Console.WriteLine(garage.array[i]);
-            }          
-            
+               string a=item.RegNo;
+                string b = item.Type;
+                Console.WriteLine($"The RegNr is:  { a}");
+                Console.WriteLine($"The type  is:  { b}");
+                Console.WriteLine("    ");
+            }
+                      
+
         }
 
 
@@ -129,9 +181,8 @@ namespace Garage
         public void ParkCar(int index)
         {
             Console.WriteLine("PLease Enter RegNr");
-            var regno = Console.ReadLine();
-            Console.WriteLine("PLease Enter Type");
-            var type = Console.ReadLine();
+            var regno = Console.ReadLine();          
+            var type = "Car";
             Console.WriteLine("PLease Enter Fule Type");
             var fuletype = Console.ReadLine();
             Car car = new Car(regno, type, fuletype);
@@ -142,34 +193,40 @@ namespace Garage
         public void ParkBus(int index)
         {
             Console.WriteLine();
+            Console.WriteLine("PLease Enter RegNr");
             var regno = Console.ReadLine();
-            var type = Console.ReadLine();
+            var btype = "Bus";
+            Console.WriteLine("PLease Enter Color");
             var color = Console.ReadLine();
-            Bus bus = new Bus(regno, type,  color);
+            Bus bus = new Bus(regno, btype,  color);
             garage.array[index] = (bus);
         }
 
         public void ParkBoat(int index)
         {
             Console.WriteLine();
+            Console.WriteLine("PLease Enter RegNr");
             var regno = Console.ReadLine();
-            var type = Console.ReadLine();
+            var otype = "Boat";
+            Console.WriteLine("PLease Enter Speed");
             var speed = int.Parse(Console.ReadLine());
-            Boat boat = new Boat(regno, type,  speed);
+            Boat boat = new Boat(regno, otype,  speed);
             garage.array[index] = (boat);
         }
 
         public void ParkMotoCyckle(int index)
         {
             Console.WriteLine();
+            Console.WriteLine("PLease Enter RegNr");
             var regno = Console.ReadLine();
-            var type = Console.ReadLine();
+            var mtype = "MotoCyckle";
+            Console.WriteLine("PLease Enter Catagory");
             var catagory = Console.ReadLine();
-            MotoCyckle motocyckle = new MotoCyckle(regno, type,catagory  );
+            MotoCyckle motocyckle = new MotoCyckle(regno, mtype,catagory  );
             garage.array[index] = (motocyckle);
         }
 
-        /// Removing Vehicle from Garage
+        /// ** Removing Vehicle from Garage **
             public string UnPark(string regnr)
             {
                 int i = 0;
@@ -183,13 +240,13 @@ namespace Garage
                     {
                         removeNr = i;
                         exisit = true;
-                        answer = "Fordonet med registreringsnr " + regnr + " har lämnat garaget";
+                        answer = "The Vehicle with RegNr " + regnr + "has left the grage";
                     }
                     i++;
                 }
 
                 if (exisit == false)
-                    answer = "Det finns inget fordon med det registreringnumret i garaget";
+                    answer = "Sorry No such match fro a RegNr";
                 else
                  garage.RemovAtt(removeNr);
 

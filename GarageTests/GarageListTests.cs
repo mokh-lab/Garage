@@ -10,21 +10,34 @@ namespace Garage.Tests
     public class GarageListTests
     {
         [TestMethod()]
-        public void GarageListTest()
+        public void CreateList_WithCapacity_ReturnsCapacity()
         {
-            Assert.Fail();
+            //Arrange
+            const int expected = 13;
+            var array = new GarageList<Vehicle>(expected);
+            //Act
+            var actual = array.Capacity;
+
+            //Assert
+            Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
-        public void checkIsGarageFullTest()
+        [TestMethod]
+        public void CreateList_WithZeroCapacity_Works()
         {
-            Assert.Fail();
+            const int expected = 0;
+            var array = new GarageList<Vehicle>(expected);
+
+            var actual = array.Capacity;
+            //bool added = array.Add();
+            int count = array.Count;
+
+            Assert.AreEqual(expected, actual);
+            //Assert.IsFalse(added);
+            Assert.AreEqual(expected, count);
         }
 
-        [TestMethod()]
-        public void GetEnumeratorTest()
-        {
-            Assert.Fail();
-        }
+
     }
+
 }

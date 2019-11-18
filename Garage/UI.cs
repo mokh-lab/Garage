@@ -21,9 +21,11 @@ namespace Garage
             //string type;
             while (true)
             {
-                Console.WriteLine("Press 1 To Park A New Vehicle");
-                Console.WriteLine("Press 2 To UnPark A New Vehicle");
-                Console.WriteLine("Press 3 To Show Stats Option A New Vehicle");
+                Console.WriteLine("--------------------------------");
+                Console.WriteLine("Press 1 to Park A New Vehicle");
+                Console.WriteLine("Press 2 to UnPark A New Vehicle");
+                Console.WriteLine("Press 3 to show A list of all vehicles");
+                Console.WriteLine("Press 4 to A find a certian vehicle");
                 Console.WriteLine("Press q To Quit");
 
                 char input = ' ';
@@ -44,28 +46,36 @@ namespace Garage
                         //Call Add Method     
                         
                         GH.Park();
-
-
-                        //Park(v.RegNo, v.Type);
+                      
                         break;
                         
                     case '2':
                         // Call Remove Method
-                        Console.WriteLine("Please Enter A regNr for delet a Vehicle");
+                        Console.WriteLine("Please Enter A regNr to delet a Vehicle");
                         string regno = Console.ReadLine();
                         GH.UnPark(regno);
-                        
+
+                        string Rmsg = GH.UnPark(regno);
+                        Console.WriteLine(Rmsg);
+
+
                         break;
 
                     case '3':
                         //Call Stats Method
+                     
                         GH.ListOfAllVehicle();
                         break;
 
                     case '4':
+                        Console.WriteLine("Please Enter A regNr to find a Vehicle");
                         string regno1 = Console.ReadLine();
                         GH.FindAVehicle(regno1);
+                        string feedback = GH.FindAVehicle(regno1);
+                        Console.WriteLine(feedback);
                         break;
+
+                        
 
                     case 'q':
                         Environment.Exit(0);

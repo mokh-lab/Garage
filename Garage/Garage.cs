@@ -16,9 +16,7 @@ namespace Garage
            GarageHandler GH = new GarageHandler(capacity);
 
         
-
             UI ui = new UI(GH);
-
             //------Call User Interface
             ui.UserInterface();
 
