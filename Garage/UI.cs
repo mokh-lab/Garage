@@ -26,6 +26,7 @@ namespace Garage
                 Console.WriteLine("Press 2 to UnPark A New Vehicle");
                 Console.WriteLine("Press 3 to show A list of all vehicles");
                 Console.WriteLine("Press 4 to A find a certian vehicle");
+                Console.WriteLine("Press 5 to A show all vehicles with 4 Wheels");
                 Console.WriteLine("Press q To Quit");
 
                 char input = ' ';
@@ -53,7 +54,7 @@ namespace Garage
                         // Call Remove Method
                         Console.WriteLine("Please Enter A regNr to delet a Vehicle");
                         string regno = Console.ReadLine();
-                        GH.UnPark(regno);
+                      //  GH.UnPark(regno);
 
                         string Rmsg = GH.UnPark(regno);
                         Console.WriteLine(Rmsg);
@@ -75,11 +76,21 @@ namespace Garage
                         Console.WriteLine(feedback);
                         break;
 
-                        
+                    case '5':
+                         Console.WriteLine("---------------");                        
+                      // GH.Findall4WheelVehicle();
+                        string feedback1 = GH.Findall4WheelVehicle();
+                        Console.WriteLine(feedback1);
+                        break;
 
                     case 'q':
                         Environment.Exit(0);
                         break;
+                    default:
+                        Console.WriteLine("Please Enter A valid choice");
+                        UserInterface();
+                        break;
+
                 }
 
             }

@@ -5,28 +5,28 @@ using System.Text;
 
 namespace Garage
 {
-   public class GarageHandler
+    public class GarageHandler
     {
-        
+
         private GarageList<Vehicle> garage;
 
-      
+
 
         public GarageHandler(int capacity)
         {
             garage = new GarageList<Vehicle>(capacity);
         }
 
-         
+
 
 
         public void Park()
         {
-          
-                bool a=true;
-                int i = 0;
-           
-            while ( garage.Count < garage.Capacity)
+            bool a = true;
+
+            int i = 0;
+
+            while (garage.Count < garage.Capacity)
             {
                 char input = ' ';
                 Console.WriteLine("Plase Choose The type of the Vehicle");
@@ -34,7 +34,7 @@ namespace Garage
                 Console.WriteLine("Plase Choose 2 for Bus");
                 Console.WriteLine("Plase Choose 3 for Boat");
                 Console.WriteLine("Plase Choose 4 for ParkMotoCyckle");
-                Console.WriteLine("-----------------------------");               
+                Console.WriteLine("-----------------------------");
                 try
                 {
                     input = Console.ReadLine()[0];
@@ -119,9 +119,9 @@ namespace Garage
 
                     }
                     i = i + 1;
-                    
+
                 }
-                else 
+                else
                 {
                     Console.WriteLine("The Garge is full");
 
@@ -136,7 +136,7 @@ namespace Garage
 
             if (garage.Count > 0)
             {
-                IEnumerable<Vehicle> query = from s in garage.array
+                IEnumerable<Vehicle> query = from s in garage
                                              where s.RegNo.ToUpper() == regno.ToUpper()
                                              select s;
                 foreach (Vehicle s in query)
@@ -149,9 +149,36 @@ namespace Garage
 
 
             if (feedback == "")
-                feedback = "Sorry No such match for regnr!!: " + regno + " in the garage";
+                feedback = "Sorry No such match for RegNr!!: " + regno + " in the garage";
             return feedback;
 
+
+
+        }
+
+        //************************
+
+        internal string Findall4WheelVehicle()
+        {
+            StringBuilder feedback = new StringBuilder();
+
+            if (garage.Count > 0)
+            {
+                IEnumerable<Vehicle> query = from s in garage
+                                             where s.Type.ToUpper() == "CAR"//,"BUS"
+                                             where s.Type.ToUpper() == "BUS"
+                                             select s;
+                foreach (Vehicle s in query)
+                    feedback.AppendLine( "The Regnr Is: " + s.RegNo + "  The Type Is: " + s.Type);
+
+                return feedback.ToString();
+
+            }
+
+            else
+            {
+               return "There is no Vehicle in the garage";
+            }
 
 
         }
@@ -168,15 +195,15 @@ namespace Garage
 
               }*/
 
-            foreach (var item in garage.array)
+            foreach (var item in garage)
             {
-               string a=item.RegNo;
+                string a = item.RegNo;
                 string b = item.Type;
                 Console.WriteLine($"The RegNr is:  { a}");
                 Console.WriteLine($"The type  is:  { b}");
                 Console.WriteLine("    ");
             }
-                      
+
 
         }
 
@@ -189,14 +216,15 @@ namespace Garage
         public void ParkCar(int index)
         {
             Console.WriteLine("PLease Enter RegNr");
-            var regno = Console.ReadLine();          
+            var regno = Console.ReadLine();
             var type = "Car";
             Console.WriteLine("PLease Enter Fule Type");
             var fuletype = Console.ReadLine();
             Car car = new Car(regno, type, fuletype);
-             garage.array[index]=(car);
-             
-          
+            //  garage[index]=car;
+            garage.Add(car);
+
+
         }
         public void ParkBus(int index)
         {
@@ -206,8 +234,8 @@ namespace Garage
             var btype = "Bus";
             Console.WriteLine("PLease Enter Color");
             var color = Console.ReadLine();
-            Bus bus = new Bus(regno, btype,  color);
-            garage.array[index] = (bus);
+            Bus bus = new Bus(regno, btype, color);
+            garage[index] = (bus);
         }
 
         public void ParkBoat(int index)
@@ -218,8 +246,8 @@ namespace Garage
             var otype = "Boat";
             Console.WriteLine("PLease Enter Speed");
             var speed = int.Parse(Console.ReadLine());
-            Boat boat = new Boat(regno, otype,  speed);
-            garage.array[index] = (boat);
+            Boat boat = new Boat(regno, otype, speed);
+            garage[index] = (boat);
         }
 
         public void ParkMotoCyckle(int index)
@@ -230,36 +258,47 @@ namespace Garage
             var mtype = "MotoCyckle";
             Console.WriteLine("PLease Enter Catagory");
             var catagory = Console.ReadLine();
-            MotoCyckle motocyckle = new MotoCyckle(regno, mtype,catagory  );
-            garage.array[index] = (motocyckle);
+            MotoCyckle motocyckle = new MotoCyckle(regno, mtype, catagory);
+            garage[index] = (motocyckle);
         }
 
         /// ** Removing Vehicle from Garage **
-            public string UnPark(string regnr)
+        public string UnPark(string regnr)
+        {
+            var vehicleToRemove = garage.FirstOrDefault(v => v.RegNo == regnr);
+            if (vehicleToRemove == null) return "Sorry No such match fro a RegNr";
+            else
             {
-                int i = 0;
-                bool exisit = false;
-                string answer = "";
-                int removeNr = 0;
-
-                foreach (Vehicle s in garage)
-                {
-                    if (regnr.ToUpper() == s.RegNo.ToUpper())
-                    {
-                        removeNr = i;
-                        exisit = true;
-                        answer = "The Vehicle with RegNr " + regnr + "has left the grage";
-                    }
-                    i++;
-                }
-
-                if (exisit == false)
-                    answer = "Sorry No such match fro a RegNr";
-                else
-                 garage.RemovAtt(removeNr);
-
-                return answer;
+              var ok =  garage.Unpark(vehicleToRemove);
+                if (ok) return "The Vehicle with RegNr " + regnr + "has left the grage";
+                else return "internal error";
             }
+        }
+
+
+    //    int i = 0;
+    //    bool exisit = false;
+    //    string answer = "";
+    //    int removeNr = 0;
+
+    //            foreach (Vehicle s in garage)
+    //            {
+    //                if (regnr.ToUpper() == s.RegNo.ToUpper())
+    //                {
+    //                    removeNr = i;
+    //                    exisit = true;
+    //                    answer = "The Vehicle with RegNr " + regnr + "has left the grage";
+    //                }
+    //i++;
+    //            }
+
+    //            if (exisit == false)
+    //                answer = "Sorry No such match fro a RegNr";
+    //            else
+    //             garage.RemovAtt(removeNr);
+
+    //            return answer;
+    //        }
         
     }
 }

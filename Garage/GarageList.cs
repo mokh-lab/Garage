@@ -7,7 +7,7 @@ namespace Garage
 {
     public class GarageList<T> : IEnumerable<T> where T : Vehicle
     {
-        public T[] array;
+        private T[] array;
         int capacity;
         int count;
         public int Capacity => capacity;
@@ -16,7 +16,17 @@ namespace Garage
 
         //  private Vehicle[] VArr = new Vehicle[13];
 
-            
+        public T this[int index]
+        {
+            get
+            {
+                return array[index];
+            }
+            set
+            {
+                array[index] = value;
+            }
+        }
 
         public GarageList(int capacity)
         {
@@ -43,10 +53,16 @@ namespace Garage
             
 
             if (IsFull) return false;
-           
-            var a = array.ToList();
-                a.Add(Vehicle);
-            return true;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == null)
+                {
+                    array[i] = Vehicle;
+                    return true;
+                }
+            }
+            return false;
             
         }
 
@@ -66,13 +82,28 @@ namespace Garage
         {
             foreach (T vehicle in array)
             {
+                if(vehicle != null)
                 yield return vehicle;
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-       
+        internal bool Unpark(Vehicle vehicleToRemove)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == vehicleToRemove)
+                {
+                    array[i] = null;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
 
         //************************************************************                      
 
